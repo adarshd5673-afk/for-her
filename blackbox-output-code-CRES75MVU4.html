@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Forgive Me?</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(45deg, #ff69b4, #ffe6f2);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 20px;
+        }
+        h1 {
+            font-size: 2.5em;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .buttons {
+            margin: 20px 0;
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s;
+        }
+        .positive {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .positive:hover {
+            background-color: #45a049;
+        }
+        .negative {
+            background-color: #f44336;
+            color: white;
+            position: relative;
+        }
+        .page {
+            display: none;
+        }
+        .active {
+            display: block;
+        }
+        .final-message {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            max-width: 500px;
+        }
+        .final-message h2 {
+            color: #ff69b4;
+        }
+        .final-message p {
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            color: #ff1493;
+            font-size: 2em;
+            animation: float 3s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        @media (max-width: 600px) {
+            h1 { font-size: 2em; }
+            button { font-size: 1em; padding: 12px 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <!-- Page 1: Forgiveness -->
+    <div class="container page active" id="page1">
+        <h1>Will You Forgive Me? 💖</h1>
+        <div class="buttons">
+            <button class="positive" id="yesBtn1">Yes, I Forgive You! 😊</button>
+            <button class="negative" id="noBtn1">No Way! 😠</button>
+        </div>
+    </div>
+    
+    <!-- Page 2: Love Question -->
+    <div class="container page" id="page2">
+        <h1>Do You Love Me? 💕</h1>
+        <div class="buttons">
+            <button class="positive" id="yesBtn2">Yes Always! 😍</button>
+            <button class="negative" id="noBtn2">No Not Anymore 😢</button>
+        </div>
+    </div>
+    
+    <!-- Page 3: Final Message -->
+    <div class="container page" id="page3">
+        <div class="final-message">
+            <h2>I Love You So Much! ❤️</h2>
+            <p>You are my sweet cute potato! 🥔💖 Let's cherish every moment together. 😘🌟✨</p>
+        </div>
+    </div>
+
+    <script>
+        const pages = document.querySelectorAll('.page');
+        const hearts = document.getElementById('hearts');
+
+        // Function to move negative buttons
+        function moveBtn(btn) {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            btn.style.left = `${x}px`;
+            btn.style.top = `${y}px`;
+            btn.style.position = 'absolute';
+        }
+
+        // Page 1: Forgiveness
+        const noBtn1 = document.getElementById('noBtn1');
+        const yesBtn1 = document.getElementById('yesBtn1');
+        noBtn1.addEventListener('mouseover', () => moveBtn(noBtn1));
+        noBtn1.addEventListener('click', () => moveBtn(noBtn1));
+        yesBtn1.addEventListener('click', () => {
+            pages[0].classList.remove('active');
+            pages[1].classList.add('active');
+        });
+
+        // Page 2: Love Question
+        const noBtn2 = document.getElementById('noBtn2');
+        const yesBtn2 = document.getElementById('yesBtn2');
+        noBtn2.addEventListener('mouseover', () => moveBtn(noBtn2));
+        noBtn2.addEventListener('click', () => moveBtn(noBtn2));
+        yesBtn2.addEventListener('click', () => {
+            pages[1].classList.remove('active');
+            pages[2].classList.add('active');
+            // Add floating hearts on final page
+            for (let i = 0; i < 30; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 3 + 's';
+                hearts.appendChild(heart);
+            }
+        });
+    </script>
+</body>
+</html>
