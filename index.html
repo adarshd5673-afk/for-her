@@ -127,47 +127,99 @@
         </div>
     </div>
 
-    <script>
-        const pages = document.querySelectorAll('.page');
-        const hearts = document.getElementById('hearts');
+  <script>
+    const pages = document.querySelectorAll('.page');
+    const hearts = document.getElementById('hearts');
 
-        // Function to move negative buttons
-        function moveBtn(btn) {
-            const x = Math.random() * (window.innerWidth - 100);
-            const y = Math.random() * (window.innerHeight - 50);
-            btn.style.left = `${x}px`;
-            btn.style.top = `${y}px`;
-            btn.style.position = 'absolute';
+    function moveBtn(btn) {
+        const x = Math.random() * (window.innerWidth - 100);
+        const y = Math.random() * (window.innerHeight - 50);
+        btn.style.left = `${x}px`;
+        btn.style.top = `${y}px`;
+        btn.style.position = 'absolute';
+    }
+
+    // Page 1 Buttons
+    const noBtn1 = document.getElementById('noBtn1');
+    const yesBtn1 = document.getElementById('yesBtn1');
+    noBtn1.addEventListener('mouseover', () => moveBtn(noBtn1));
+    noBtn1.addEventListener('click', () => moveBtn(noBtn1));
+    yesBtn1.addEventListener('click', () => {
+        pages[0].classList.remove('active');
+        pages[1].classList.add('active');
+    });
+
+    // Page 2 Buttons
+    const noBtn2 = document.getElementById('noBtn2');
+    const yesBtn2 = document.getElementById('yesBtn2');
+    noBtn2.addEventListener('mouseover', () => moveBtn(noBtn2));
+    noBtn2.addEventListener('click', () => moveBtn(noBtn2));
+    yesBtn2.addEventListener('click', showFinalPage);
+
+    function showFinalPage() {
+        pages[1].classList.remove('active');
+        pages[2].classList.add('active');
+
+        for (let i = 0; i < 30; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '❤️';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDelay = Math.random() * 3 + 's';
+            hearts.appendChild(heart);
         }
 
-        // Page 1: Forgiveness
-        const noBtn1 = document.getElementById('noBtn1');
-        const yesBtn1 = document.getElementById('yesBtn1');
-        noBtn1.addEventListener('mouseover', () => moveBtn(noBtn1));
-        noBtn1.addEventListener('click', () => moveBtn(noBtn1));
-        yesBtn1.addEventListener('click', () => {
-            pages[0].classList.remove('active');
-            pages[1].classList.add('active');
-        });
+        addSurpriseButton();
+    }
 
-        // Page 2: Love Question
-        const noBtn2 = document.getElementById('noBtn2');
-        const yesBtn2 = document.getElementById('yesBtn2');
-        noBtn2.addEventListener('mouseover', () => moveBtn(noBtn2));
-        noBtn2.addEventListener('click', () => moveBtn(noBtn2));
-        yesBtn2.addEventListener('click', () => {
-            pages[1].classList.remove('active');
-            pages[2].classList.add('active');
-            // Add floating hearts on final page
-            for (let i = 0; i < 30; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.textContent = '❤️';
-                heart.style.left = Math.random() * 100 + '%';
-                heart.style.animationDelay = Math.random() * 3 + 's';
-                hearts.appendChild(heart);
-            }
-        });
-    </script>
+    function addSurpriseButton() {
+        const btn = document.createElement('button');
+        btn.textContent = "Click Here For A Surprise 🎁";
+        btn.className = "positive";
+        btn.style.marginTop = "20px";
+        pages[2].appendChild(btn);
+
+        btn.addEventListener('click', showPhoto1);
+    }
+
+    function showPhoto(url, text, nextFunction) {
+        document.body.innerHTML = `
+        <div style="width:100vw;height:100vh;background:black;display:flex;
+        justify-content:center;align-items:center;flex-direction:column;color:white;
+        text-align:center;">
+            <img src="${url}" style="max-height:85vh;width:auto;max-width:100%;border-radius:10px;">
+            <p style="margin-top:10px;font-size:1.3em;">
+                ${text}
+            </p>
+        </div>`;
+
+        document.body.addEventListener('click', nextFunction);
+    }
+
+    function showPhoto1() {
+        showPhoto(
+            "https://i.postimg.cc/DS3XGKHk/image.jpg",
+            "Oh shit 😳 That’s the wrong photo! <br> Click anywhere to see the right one ➡️",
+            showPhoto2
+        );
+    }
+
+    function showPhoto2() {
+        showPhoto(
+            "https://i.postimg.cc/rRtDdh9V/image.jpg",
+            "Arre yeh bhi galat hogaya! 😭 <br> Sorry sorry 😅 Click again ➡️",
+            showPhoto3
+        );
+    }
+
+    function showPhoto3() {
+        showPhoto(
+            "https://i.postimg.cc/qNGzC62c/image.jpg",
+            "Here is my Cutieee ❤️😍 <br> I Love You Forever 💘✨",
+            () => {} // End
+        );
+    }
+</script>
+
 </body>
 </html> 
